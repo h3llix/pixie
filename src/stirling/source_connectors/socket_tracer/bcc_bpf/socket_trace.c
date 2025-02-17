@@ -28,8 +28,6 @@
 
 #define socklen_t size_t
 
-#include "../bcc_bpf_intf/socket_trace.h"
-
 #include "src/stirling/bpf_tools/bcc_bpf/task_struct_utils.h"
 #include "src/stirling/bpf_tools/bcc_bpf/utils.h"
 #include "src/stirling/source_connectors/socket_tracer/bcc_bpf/protocol_inference.h"
