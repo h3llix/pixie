@@ -213,6 +213,7 @@ static __inline struct socket_data_event_t* fill_socket_data_event(
   event->attr.timestamp_ns = bpf_ktime_get_ns();
   event->attr.source_fn = src_fn;
   event->attr.ssl = conn_info->ssl;
+  event->attr.ssl_version = conn_info->ssl_version;
   event->attr.ssl_source = conn_info->ssl_source;
   event->attr.direction = direction;
   event->attr.conn_id = conn_info->conn_id;
@@ -820,6 +821,10 @@ static __inline void process_data(const bool vecs, struct pt_regs* ctx, uint64_t
   struct conn_info_t* conn_info = get_or_create_conn_info(tgid, args->fd);
   if (conn_info == NULL) {
     return;
+  }
+
+  if (ssl) {
+    conn_info->ssl_version = args->ssl_version;
   }
 
   if (!should_trace_conn(conn_info)) {
